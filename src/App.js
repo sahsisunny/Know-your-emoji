@@ -1,24 +1,30 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import "./App.css";
 
 const emojiDictionary = require("./emojiDict.json");
 var list = Object.keys(emojiDictionary);
 
 function App() {
+  const [meaning, setMeaning] = useState("We have 1807 emoji");
+  const [randomEmojis, setRandomEmojis] = useState([]);
+
+  useEffect(() => {
+    getRandomEmojis();
+  }, []);
+
   // For Random emoji
-  var randomEmojis = [];
   function getRandomEmojis() {
+    let randomEmoji = [];
     for (var i = 0; i < 24; i++) {
       var randomIndex = Math.floor(Math.random() * list.length);
-      randomEmojis.push(list[randomIndex]);
+      randomEmoji.push(list[randomIndex]);
     }
-    return randomEmojis;
+    setRandomEmojis(randomEmoji);
+    // return randomEmojis;
   }
 
-  getRandomEmojis();
-
   // For User input
-  const [meaning, setMeaning] = useState("We have 1807 emoji");
   function inputHandler(event) {
     var userInputText = event.target.value;
     var meaning = emojiDictionary[userInputText].name;
