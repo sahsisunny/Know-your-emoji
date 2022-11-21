@@ -4,12 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Footer from './footer';
-import About from './about';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
-    <About/>
     <Footer/>
   </React.StrictMode>
 );
