@@ -85,3 +85,23 @@ p{
   text-decoration: none;
   font-weight: 600;
 }
+
+table{
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+th, td{
+  border: 1px solid black;
+  padding: 10px;
+}
+
+tr:nth-child(even){
+  background-color: #f2f2f2;
+}
+
+tr:hover{
+  background-color: #ddd;
+}
