@@ -11,6 +11,7 @@
   margin: auto;
   height: 100vh;
   font-family: 'Kanit', sans-serif;
+  padding: 0 10px;
 }
 
 .about-section {
@@ -46,7 +47,6 @@
 .container p {
   text-align: center;
   font-size: 25px;
-  text-transform: capitalize;
   font-weight: 600;
 }
 

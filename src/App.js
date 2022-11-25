@@ -24,14 +24,31 @@ function App() {
     // return randomEmojis;
   }
 
-  // For User input
-  function inputHandler(event) {
-    var userInputText = event.target.value;
-    var meaning = emojiDictionary[userInputText].name;
-    if (meaning === undefined) {
-      meaning = "We don't have this in our DATABASE!";
+  // Validation
+  function validateInput(event) {
+    var input = event.target.value;
+    if (input === "") {
+      setMeaning("We know 1807 emojies");
+    } else if (input in emojiDictionary) {
+      setMeaningFunction(input);
+    } else {
+      setMeaning("Enter valid and one emoji at a time");
     }
-    setMeaning(meaning);
+
+  }
+
+  // For User input
+  function setMeaningFunction(input) {
+    var userInputText = input;
+    var meaning = emojiDictionary[userInputText].name;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i] === userInputText) {
+        setMeaning(meaning);
+        break;
+      } else {
+        setMeaning("We don't have this emoji");
+      }
+    }
   }
 
   // For Clicking on emoji
@@ -48,7 +65,7 @@ function App() {
           <input
             className="inputEmoji"
             type="text"
-            onChange={inputHandler}
+            onChange={validateInput}
             placeholder="?"
           />
           <button onClick={() => document.querySelector(".inputEmoji").value = ""} className="clear">❌</button>
