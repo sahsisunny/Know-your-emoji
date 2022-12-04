@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 
 const emojiDictionary = require("./emojiDict.json");
 var list = Object.keys(emojiDictionary);
 
 function App() {
-  const [meaning, setMeaning] = useState("We have 1807 emoji");
-  const [randomEmojis, setRandomEmojis] = useState([]);
+  const [meaning, setMeaning] = useState("We know 1807 emoji");   // For displaying meaning
+  const [randomEmojis, setRandomEmojis] = useState([]);           // For displaying random emojis
+  const [value, setValue] = useState("");                         // For input field
 
+  // Run only once for random emoji
   useEffect(() => {
     getRandomEmojis();
   }, []);
@@ -21,20 +22,23 @@ function App() {
       randomEmoji.push(list[randomIndex]);
     }
     setRandomEmojis(randomEmoji);
-    // return randomEmojis;
   }
 
   // Validation
   function validateInput(event) {
     var input = event.target.value;
+    setValue(input);
     if (input === "") {
       setMeaning("We know 1807 emojies");
+    } else if (input.length > 2) {
+      input = input.slice(-2);
+      setMeaningFunction(input);
+      setValue(input);
     } else if (input in emojiDictionary) {
       setMeaningFunction(input);
     } else {
       setMeaning("Enter valid and one emoji at a time");
     }
-
   }
 
   // For User input
@@ -46,7 +50,7 @@ function App() {
         setMeaning(meaning);
         break;
       } else {
-        setMeaning("We don't have this emoji");
+        setMeaning("We don't have this emoji!");
       }
     }
   }
@@ -54,8 +58,11 @@ function App() {
   // For Clicking on emoji
   function emojiClickHandler(emoji) {
     setMeaning(emojiDictionary[emoji].name);
-    document.querySelector(".inputEmoji").value = emoji;
+    // document.querySelector(".inputEmoji").value = emoji;
+    console.log(setValue);
+    setValue(emoji);
   }
+
 
   return (
     <div className="App">
@@ -66,9 +73,11 @@ function App() {
             className="inputEmoji"
             type="text"
             onChange={validateInput}
+            onFocus={() => setValue("")}
             placeholder="?"
+            value={value}
           />
-          <button onClick={() => document.querySelector(".inputEmoji").value = ""} className="clear">❌</button>
+          <button onClick={() => setValue("")} className="clear">❌</button>
         </div>
         <p>{meaning}</p>
       </div>
@@ -86,6 +95,7 @@ function App() {
           );
         })}
       </div>
+
     </div>
   );
 }
