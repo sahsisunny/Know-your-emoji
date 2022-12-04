@@ -5,16 +5,14 @@ const emojiDictionary = require("./emojiDict.json");
 var list = Object.keys(emojiDictionary);
 
 function App() {
-  const [meaning, setMeaning] = useState("We know 1807 emoji");   // For displaying meaning
-  const [randomEmojis, setRandomEmojis] = useState([]);           // For displaying random emojis
-  const [value, setValue] = useState("");                         // For input field
+  const [meaning, setMeaning] = useState("Please enter an emoji above and select it from the list below");
+  const [randomEmojis, setRandomEmojis] = useState([]);
+  const [value, setValue] = useState("");
 
-  // Run only once for random emoji
   useEffect(() => {
     getRandomEmojis();
   }, []);
 
-  // For Random emoji
   function getRandomEmojis() {
     let randomEmoji = [];
     for (var i = 0; i < 24; i++) {
@@ -24,29 +22,33 @@ function App() {
     setRandomEmojis(randomEmoji);
   }
 
-  // Validation
   function validateInput(event) {
     var input = event.target.value;
     setValue(input);
     if (input === "") {
       setMeaning("We know 1807 emojies");
-    } else if (input.length > 2) {
-      input = input.slice(-2);
-      setMeaningFunction(input);
-      setValue(input);
+
     } else if (input in emojiDictionary) {
       setMeaningFunction(input);
+
+    } else if (input.length > 2) {
+      let input2 = input.slice(-2);
+      if (input2.length === 2 && input2 in emojiDictionary) {
+        setMeaningFunction(input2);
+        setValue(input2);
+      } else {
+        setMeaning("Enter only one emoji at a time");
+      }
     } else {
-      setMeaning("Enter valid and one emoji at a time");
+      setMeaning("Enter only emoji");
     }
   }
 
-  // For User input
   function setMeaningFunction(input) {
-    var userInputText = input;
-    var meaning = emojiDictionary[userInputText].name;
+    var userInputEmoji = input;
+    var meaning = emojiDictionary[userInputEmoji].name;
     for (var i = 0; i < list.length; i++) {
-      if (list[i] === userInputText) {
+      if (list[i] === userInputEmoji) {
         setMeaning(meaning);
         break;
       } else {
@@ -55,11 +57,8 @@ function App() {
     }
   }
 
-  // For Clicking on emoji
   function emojiClickHandler(emoji) {
     setMeaning(emojiDictionary[emoji].name);
-    // document.querySelector(".inputEmoji").value = emoji;
-    console.log(setValue);
     setValue(emoji);
   }
 
