@@ -5,7 +5,7 @@ const emojiDictionary = require("./emojiDict.json");
 var list = Object.keys(emojiDictionary);
 
 function App() {
-  const [meaning, setMeaning] = useState("Please enter an emoji above and select it from the list below");
+  const [meaning, setMeaning] = useState("Please enter an emoji above or select it from the list below");
   const [randomEmojis, setRandomEmojis] = useState([]);
   const [value, setValue] = useState("");
 
